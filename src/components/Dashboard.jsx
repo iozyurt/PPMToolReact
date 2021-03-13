@@ -1,21 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import ProjectItem from "./ProjectItem";
+import { useDispatch, useSelector } from "react-redux";
+import { loadProjects } from "../store/projects";
 
 function Dashboard() {
-  const [projects, setProjects] = useState([]);
+  const dispatch = useDispatch();
+  const projects = useSelector((state) => state.entities.projects.list);
 
   useEffect(() => {
-    loadProjects();
+    dispatch(loadProjects());
   }, []);
-
-  const loadProjects = async () => {
-    const { data: projects } = await axios.get(
-      "http://localhost:8080/api/projects"
-    );
-    setProjects(projects);
-  };
 
   return (
     <div className="projects">
