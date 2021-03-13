@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import ProjectItem from "./ProjectItem";
 
-function Dashboard(props) {
+function Dashboard() {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    loadProjects();
+  }, []);
+
+  const loadProjects = async () => {
+    const { data: projects } = await axios.get(
+      "http://localhost:8080/api/projects"
+    );
+    setProjects(projects);
+  };
+
   return (
     <div className="projects">
       <div className="container">
@@ -16,7 +30,9 @@ function Dashboard(props) {
 
             <br />
             <hr />
-            <ProjectItem />
+            {projects.map((project) => (
+              <ProjectItem key={project.id} project={project} />
+            ))}
           </div>
         </div>
       </div>
