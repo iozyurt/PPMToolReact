@@ -22,6 +22,9 @@ const slice = createSlice({
     projectsRequestFailed: (projects, action) => {
       projects.loading = false;
     },
+    projectAdded: (projects, action) => {
+      projects.list.push(action.payload);
+    },
   },
 });
 
@@ -29,6 +32,7 @@ const {
   projectsRequested,
   projectsReceived,
   projectsRequestFailed,
+  projectAdded,
 } = slice.actions;
 
 export default slice.reducer;
@@ -46,4 +50,25 @@ export const loadProjects = () => (dispatch, getState) => {
       onError: projectsRequestFailed.type,
     })
   );
+};
+
+export const addProject = (project) => (dispatch, getState) => {
+  if (project.id) {
+    dispatch(
+      apiCallBegan({
+        url: `${projectsURL}/${project.id}`,
+        method: "put",
+        data: project,
+        // onSuccess: projectAdded.type,
+      })
+    );
+  } else
+    dispatch(
+      apiCallBegan({
+        url: projectsURL,
+        method: "post",
+        data: project,
+        onSuccess: projectAdded.type,
+      })
+    );
 };

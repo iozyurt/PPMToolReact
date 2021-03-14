@@ -10,7 +10,7 @@ function Dashboard() {
 
   useEffect(() => {
     dispatch(loadProjects());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="projects">
@@ -19,7 +19,7 @@ function Dashboard() {
           <div className="col-md-12">
             <h1 className="display-4 text-center">Projects</h1>
             <br />
-            <Link to="/addProject" className="btn btn-lg btn-info">
+            <Link to="/projects/new" className="btn btn-lg btn-info">
               Create a Project
             </Link>
 

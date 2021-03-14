@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.css";
+import "antd/dist/antd.css";
 import "font-awesome/css/font-awesome.css";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
