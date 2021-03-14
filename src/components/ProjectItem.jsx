@@ -1,7 +1,11 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { deleteProject } from "../store/projects";
 
 function ProjectItem({ project }) {
+  const dispatch = useDispatch();
+
   return (
     <div className="container">
       <div className="card card-body bg-light mb-3">
@@ -27,7 +31,17 @@ function ProjectItem({ project }) {
               </Link>
 
               <li className="list-group-item delete">
-                <i className="fa fa-minus-circle pr-1"> Delete Project</i>
+                <i className="fa fa-minus-circle pr-1">
+                  {" "}
+                  <button
+                    onClick={() =>
+                      dispatch(deleteProject(project.projectIdentifier))
+                    }
+                    className="btn btn-danger btn-sm"
+                  >
+                    Delete Project
+                  </button>
+                </i>
               </li>
             </ul>
           </div>

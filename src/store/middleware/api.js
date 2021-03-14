@@ -34,6 +34,11 @@ const api = ({ dispatch }) => (next) => async (action) => {
         response.status,
         `Project ID: ${response.data.projectIdentifier} successfully created.`
       );
+    if (method === "delete")
+      successNotification(
+        response.status,
+        `Project ID: ${response.data.projectIdentifier} successfully deleted.`
+      );
     //Specific success action
     if (onSuccess) dispatch({ type: onSuccess, payload: response.data });
   } catch (error) {

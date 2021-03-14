@@ -25,6 +25,16 @@ const slice = createSlice({
     projectAdded: (projects, action) => {
       projects.list.push(action.payload);
     },
+    projectUpdated: (projects, action) => {
+      const id = action.payload.id;
+      const index = projects.list.indexOf(id);
+      projects.list.splice(index, 1);
+      projects.list.push(action.payload);
+    },
+    projectDeleted: (projects, action) => {
+      const index = projects.list.indexOf(action.payload);
+      projects.list.splice(index, 1);
+    },
   },
 });
 
@@ -33,6 +43,8 @@ const {
   projectsReceived,
   projectsRequestFailed,
   projectAdded,
+  projectUpdated,
+  projectDeleted,
 } = slice.actions;
 
 export default slice.reducer;
@@ -59,7 +71,7 @@ export const addProject = (project) => (dispatch, getState) => {
         url: `${projectsURL}/${project.id}`,
         method: "put",
         data: project,
-        // onSuccess: projectAdded.type,
+        onSuccess: projectUpdated.type,
       })
     );
   } else
@@ -71,4 +83,16 @@ export const addProject = (project) => (dispatch, getState) => {
         onSuccess: projectAdded.type,
       })
     );
+};
+
+export const deleteProject = (projectId) => (dispatch, getState) => {
+  console.log(projectId);
+  dispatch(
+    apiCallBegan({
+      url: `${projectsURL}/${projectId}`,
+      method: "delete",
+      data: projectId,
+      onSuccess: projectDeleted.type,
+    })
+  );
 };

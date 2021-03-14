@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Joi from "joi-browser";
 import { addProject, loadProjects } from "../store/projects";
 import Form from "./common/form";
+import { Link } from "react-router-dom";
 
 class ProjectForm extends Form {
   state = {
@@ -62,6 +63,7 @@ class ProjectForm extends Form {
   doSubmit = () => {
     this.props.addProject(this.state.data);
     this.props.history.push("/dashboard");
+    // window.location = "/dashboard";
   };
 
   render() {
@@ -84,6 +86,9 @@ class ProjectForm extends Form {
                 {this.renderDate("end_date", "Estimated End Date", "date")}
                 {this.renderButton("Save")}
               </form>
+              <Link to="/dashboard" className="btn btn-primary btn-block mt-4">
+                Cancel
+              </Link>
             </div>
           </div>
         </div>
